@@ -39,14 +39,10 @@ export default function Hero() {
             </p>
             <div className="flex flex-col xs:flex-row gap-4 justify-center lg:justify-start max-w-sm xs:max-w-none mx-auto lg:mx-0">
               <Link
-                href="/#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                href="/consultation"
                 className="bg-[#D56649] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#c4573b] transition-all hover:scale-105 hover:shadow-lg inline-flex items-center justify-center gap-2 group"
               >
-                Get Started
+                Book Consultation
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className="h-6 w-6 transform transition-transform group-hover:translate-x-1" 

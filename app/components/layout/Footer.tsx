@@ -2,15 +2,26 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { NAV_ITEMS } from '@/app/constants/navigation';
 import { scrollToElement } from '@/app/utils/smoothScroll';
 
 export default function Footer() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('/#')) {
       e.preventDefault();
       const elementId = href.replace('/#', '');
-      scrollToElement(elementId);
+
+      // If we're on the homepage, smooth scroll to section
+      if (pathname === '/' || pathname.startsWith('/#')) {
+        scrollToElement(elementId);
+      } else {
+        // On other pages (e.g., /consultation), navigate to the homepage section
+        router.push(href);
+      }
     }
   };
 

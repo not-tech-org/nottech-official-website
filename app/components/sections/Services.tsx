@@ -147,16 +147,12 @@ const ServicesSection = () => {
             Looking for a custom solution? Let&apos;s discuss how we can help you achieve your goals.
           </p>
           <Link
-            href="/#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            href="/consultation"
             className="inline-flex items-center px-6 sm:px-8 py-3 rounded-full bg-[#D56649] text-white text-sm sm:text-base font-semibold hover:bg-[#c4573b] transition-all duration-300 hover:shadow-lg"
             role="button"
-            aria-label="Get Started - Contact us to discuss your custom solution"
+            aria-label="Book Consultation - Discuss your custom solution"
           >
-            Get Started
+            Book Consultation
             <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

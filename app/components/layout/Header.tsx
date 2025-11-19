@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { scrollToElement } from '@/app/utils/smoothScroll';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_ITEMS } from '@/app/constants/navigation';
 import ThemeToggle from '../common/ThemeToggle';
@@ -14,6 +14,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const activeSection = useActiveSection();
 
   useEffect(() => {
@@ -61,8 +62,17 @@ export default function Header() {
                 href={item.href}
                 onClick={(e) => {
                   if (item.href.startsWith('/#')) {
-                    e.preventDefault();
-                    scrollToElement(item.href.substring(2));
+                    const targetId = item.href.substring(2);
+
+                    // If we're on the homepage, use smooth scrolling
+                    if (pathname === '/' || pathname.startsWith('/#')) {
+                      e.preventDefault();
+                      scrollToElement(targetId);
+                    } else {
+                      // If we're on another page (e.g., /consultation), navigate to the homepage section
+                      e.preventDefault();
+                      router.push(item.href);
+                    }
                   }
                 }}
                 role="menuitem"
@@ -84,16 +94,12 @@ export default function Header() {
             ))}
             <ThemeToggle />
             <Link
-              href="/#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              href="/consultation"
               className="bg-[#D56649] text-white px-8 py-3 rounded-full text-base font-semibold hover:bg-[#c4573b] transition-all hover:scale-105 hover:shadow-lg inline-flex items-center gap-2"
               role="button"
-              aria-label="Get Started - Contact Us"
+              aria-label="Book Consultation"
             >
-              Get Started
+              Book Consultation
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
@@ -167,8 +173,15 @@ export default function Header() {
                         }`}
                         onClick={(e) => {
                           if (item.href.startsWith('/#')) {
-                            e.preventDefault();
-                            scrollToElement(item.href.substring(2));
+                            const targetId = item.href.substring(2);
+
+                            if (pathname === '/' || pathname.startsWith('/#')) {
+                              e.preventDefault();
+                              scrollToElement(targetId);
+                            } else {
+                              e.preventDefault();
+                              router.push(item.href);
+                            }
                           }
                           setIsMobileMenuOpen(false);
                         }}
@@ -178,15 +191,11 @@ export default function Header() {
                     ))}
                     <div className="pt-4 mt-4 border-t border-gray-100 dark:border-gray-700">
                       <Link
-                        href="/#contact"
+                        href="/consultation"
                         className="bg-[#D56649] text-white px-6 py-3 rounded-xl text-lg font-semibold hover:bg-[#c4573b] transition-all hover:shadow-lg inline-flex items-center gap-2 w-full justify-center"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                          setIsMobileMenuOpen(false);
-                        }}
+                        onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        Get Started
+                        Book Consultation
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
